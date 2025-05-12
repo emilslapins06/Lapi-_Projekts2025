@@ -3,58 +3,73 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Hash;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // Show the registration form
     public function showRegistrationForm()
     {
         return view('register');
     }
 
-    // Handle the registration logic
     public function register(Request $request)
     {
-        // Validate form data
         $request->validate([
             'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
+        ], [
+            'username.required' => 'Lietotājvārds ir obligāts.',
+            'username.unique' => 'Šis lietotājvārds jau ir aizņemts.',
+            'email.required' => 'E-pasts ir obligāts.',
+            'email.unique' => 'Šis e-pasts jau ir reģistrēts.',
+            'password.required' => 'Parole ir obligāta.',
+            'password.confirmed' => 'Paroles nesakrīt.',
+            'password.min' => 'Parolei jābūt vismaz 6 simboliem.'
         ]);
 
-        // Create the user
-        $user = new User;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        // Redirect or log the user in
-        auth()->login($user);
-        return redirect()->route('home'); // Change this to the appropriate route
+        Auth::login($user);
+
+        return redirect()->intended(route('home'))->with('success', 'Reģistrācija veiksmīga!');
     }
 
-    // Show the login form
     public function showLoginForm()
     {
         return view('login');
     }
 
-    // Handle the login logic
     public function login(Request $request)
     {
-        // Validate form data
         $request->validate([
             'username' => 'required',
             'password' => 'required',
+        ], [
+            'username.required' => 'Lietotājvārds ir obligāts.',
+            'password.required' => 'Parole ir obligāta.'
         ]);
 
-        // Attempt login
-        if (auth()->attempt($request->only('username', 'password'))) {
-            return redirect()->route('home'); // Redirect to a dashboard or home
+        if (Auth::attempt($request->only('username', 'password'))) {
+            return redirect()->intended(route('home'))->with('success', 'Pieteikšanās veiksmīga!');
         }
 
-        return back()->withErrors(['username' => 'Invalid credentials']);
+        return back()->withErrors([
+            'username' => 'Nepareizs lietotājvārds vai parole.'
+        ])->withInput();
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Jūs esat veiksmīgi izrakstījies!');
     }
 }
