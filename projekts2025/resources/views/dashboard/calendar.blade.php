@@ -11,12 +11,36 @@
             margin-bottom: 20px;
         }
 
-        .filter-container select {
+        .filter-container select,
+        #eventTypeSelect {
             padding: 10px;
             font-size: 16px;
             border-radius: 5px;
             border: none;
             cursor: pointer;
+        }
+
+        .calendar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -60,10 +84,10 @@
                 let selectedDate = prompt("Enter the date (YYYY-MM-DD):");
 
                 if (selectedDate) {
+                    let eventType = prompt("Enter the event type (Apskate, Serviss, Cits):");
                     let eventText = prompt("Enter the description:");
-                    let eventTitle = prompt("Select event type: Apskate, Serviss, or Cits");
 
-                    if (eventText && eventTitle) {
+                    if (eventText && eventType) {
                         fetch('/api/events', {
                             method: 'POST',
                             headers: {
@@ -72,7 +96,7 @@
                             },
                             body: JSON.stringify({
                                 date: selectedDate,
-                                title: eventTitle,
+                                title: eventType,
                                 description: eventText
                             })
                         })
@@ -83,7 +107,7 @@
                         })
                         .catch(error => console.error('Error:', error));
                     } else {
-                        alert("Both description and event type are required.");
+                        alert("All fields are required.");
                     }
                 } else {
                     alert("No date entered.");

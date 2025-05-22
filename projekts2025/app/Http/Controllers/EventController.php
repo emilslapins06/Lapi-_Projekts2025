@@ -17,15 +17,14 @@ class EventController extends Controller
             $query->where('title', $title);
         }
 
-        $events = $query->selectRaw('title, COUNT(*) as event_count, DATE(date) as date')
-                        ->groupBy('title', 'date')
-                        ->get();
+        $events = $query->get();
 
         $formattedEvents = $events->map(function ($event) {
             return [
+                'id' => $event->id,
                 'title' => $event->title,
                 'start' => $event->date,
-                'description' => $event->event_count . ' events',
+                'description' => $event->description
             ];
         });
 
