@@ -181,20 +181,20 @@ td {
 }
 
 #calendar {
-    width: 100%;        /* Make the calendar take full width */
-    max-width: 900px;   /* Set a max-width to avoid it being too wide on large screens */
-    margin: 0 auto;     /* Center the calendar horizontally */
+    width: 100%;      
+    max-width: 900px;  
+    margin: 0 auto; 
     border-radius: 10px;
 }
 
 .calendar-container {
     display: flex;
     align-items: flex-start;
-    gap: 30px;          /* Increased gap between button and calendar */
+    gap: 30px;   
     margin-bottom: 20px;
-    width: 100%;        /* Ensure the container takes full width */
-    max-width: 1200px;  /* Set a max-width for the entire container */
-    margin: 0 auto;     /* Center the container */
+    width: 100%;       
+    max-width: 1200px; 
+    margin: 0 auto;    
 }
 
 .add-btn {

@@ -2,6 +2,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CarController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,10 @@ Route::get('/calendar', function () {
 
 Route::get('/api/events', [App\Http\Controllers\EventController::class, 'fetchEvents']);
 Route::post('/api/events', [App\Http\Controllers\EventController::class, 'store']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/izdevumi', [CarController::class, 'showPage']);
+    Route::post('/izdevumi/add-car', [CarController::class, 'store']);
+    Route::post('/cars/{car}/share', [CarController::class, 'share'])->middleware('auth');
+    Route::post('/cars/{car}/confirm', [CarController::class, 'confirmShare'])->middleware('auth');
+});

@@ -17,7 +17,7 @@
         <div class="button-container">
         <button onclick="window.location='{{ url('/karte') }}'" class="main-btn">Karte</button>
         <button onclick="window.location='#'" class="main-btn">Degvielas patēriņš</button>
-        <button onclick="window.location='#'" class="main-btn">Izdevumu pārvaldība</button>
+        <button onclick="window.location='{{ url('/izdevumi') }}'" class="main-btn">Izdevumu pārvaldība</button>
         <button onclick="window.location='{{ url('/calendar') }}'" class="main-btn">Apkopes kalendārs</button>
         <div>
 
