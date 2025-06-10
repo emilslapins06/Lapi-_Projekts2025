@@ -34,8 +34,9 @@ Route::get('/api/events', [App\Http\Controllers\EventController::class, 'fetchEv
 Route::post('/api/events', [App\Http\Controllers\EventController::class, 'store']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/izdevumi', [CarController::class, 'showPage']);
-    Route::post('/izdevumi/add-car', [CarController::class, 'store']);
-    Route::post('/cars/{car}/share', [CarController::class, 'share'])->middleware('auth');
-    Route::post('/cars/{car}/confirm', [CarController::class, 'confirmShare'])->middleware('auth');
+    Route::get('/izdevumi', [CarController::class, 'index'])->name('izdevumi.index');
+    Route::post('/izdevumi/add-car', [CarController::class, 'store'])->name('izdevumi.store');
+    Route::post('/cars/{car}/share', [CarController::class, 'share'])->name('cars.share');
+    Route::post('/cars/{car}/confirm', [CarController::class, 'confirmShare'])->name('cars.confirm');
 });
+

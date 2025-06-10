@@ -53,8 +53,6 @@ class User extends Authenticatable
 
     public function cars()
     {
-        return $this->belongsToMany(Car::class)
-                    ->withPivot('confirmed')
-                    ->withTimestamps();
+        return $this->belongsToMany(Car::class)->withPivot('confirmed')->withTimestamps();
     }
 }

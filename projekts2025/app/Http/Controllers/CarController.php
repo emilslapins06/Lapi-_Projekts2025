@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
+    public function index()
+    {
+        $cars = auth()->user()->cars()->with('users')->get();
+        return view('dashboard.izdevumi', compact('cars'));  // points inside dashboard folder
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -21,11 +27,12 @@ class CarController extends Controller
         $car = Car::create($validated);
         $car->users()->attach(Auth::id(), ['confirmed' => true]);
 
-        return response()->json(['message' => 'Car added successfully.']);
+        return redirect()->route('izdevumi.index')->with('success', 'Car added successfully.');
     }
 
     public function share(Request $request, Car $car)
     {
+        // TODO: Add authorization check
         $validated = $request->validate([
             'user_email' => 'required|email|exists:users,email',
         ]);
@@ -36,29 +43,16 @@ class CarController extends Controller
             $car->users()->attach($user->id, ['confirmed' => false]);
         }
 
-        return response()->json(['message' => 'Car share request sent.']);
+        return redirect()->back()->with('success', 'Car share request sent.');
     }
 
     public function confirmShare(Car $car)
     {
         $userId = Auth::id();
 
-        $car->users()->updateExistingPivot($userId, ['confirmed' => true]);
-
-        return response()->json(['message' => 'Car share confirmed.']);
-    }
-
-    public function showPage()
-    {
-        $cars = auth()->user()->cars;
-        return view('dashboard.izdevumi', compact('cars'));
-    }
-
-    
-    public function index()
-    {
-        $cars = auth()->user()->cars()->with('users')->get();
-
-        return view('dashboard.izdevumi', compact('cars'));
+        if ($car->users()->where('user_id', $userId)->exists()) {
+            $car->users()->updateExistingPivot($userId, ['confirmed' => true]);
+            return redirect()->back()->with('success', 'Car share confirmed.');
+        }
     }
 }
