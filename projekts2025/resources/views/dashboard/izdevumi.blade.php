@@ -15,7 +15,7 @@
 
         <form id="carForm" method="POST" action="{{ route('izdevumi.store') }}">
             @csrf
-            <input type="text" name="brand" placeholder="Zīmols" required />
+            <input type="text" name="brand" placeholder="Marka" required />
             <input type="text" name="model" placeholder="Modelis" required />
             <input type="number" name="year" placeholder="Gads" required min="1900" max="2099" />
             <input type="number" name="mileage" placeholder="Nobraukums (km)" required min="0" />

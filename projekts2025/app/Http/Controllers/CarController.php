@@ -12,7 +12,7 @@ class CarController extends Controller
     public function index()
     {
         $cars = auth()->user()->cars()->with('users')->get();
-        return view('dashboard.izdevumi', compact('cars'));  // points inside dashboard folder
+        return view('dashboard.izdevumi', compact('cars'));
     }
 
     public function store(Request $request)
@@ -32,7 +32,6 @@ class CarController extends Controller
 
     public function share(Request $request, Car $car)
     {
-        // TODO: Add authorization check
         $validated = $request->validate([
             'user_email' => 'required|email|exists:users,email',
         ]);

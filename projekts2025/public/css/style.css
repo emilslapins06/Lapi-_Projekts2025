@@ -209,7 +209,6 @@ td {
     min-width: 150px;
 }
 
-/* --- Page container improvements --- */
 .container {
     width: 100%;
     max-width: 480px;
@@ -220,7 +219,6 @@ td {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* --- Headers --- */
 .container h2 {
     font-size: 32px;
     font-weight: 700;
@@ -232,7 +230,6 @@ td {
     text-shadow: 0 0 6px rgba(255,255,255,0.2);
 }
 
-/* --- Form Styling --- */
 form {
     display: flex;
     flex-direction: column;
@@ -260,7 +257,6 @@ input[type="email"]:focus {
     box-shadow: 0 0 8px #99ccff;
 }
 
-/* --- Buttons --- */
 button {
     background-color: #666;
     color: #fff;
@@ -281,7 +277,6 @@ button:hover {
     box-shadow: 0 6px 18px rgba(137,170,255,0.8);
 }
 
-/* --- Car list --- */
 #carList {
     margin-top: 25px;
     padding-left: 20px;
@@ -305,7 +300,6 @@ button:hover {
     cursor: default;
 }
 
-/* --- Sharing section --- */
 h3 + form {
     margin-top: 35px;
 }
@@ -328,7 +322,6 @@ select[name="car_id"]:focus {
     box-shadow: 0 0 8px #99ccff;
 }
 
-/* --- Alert message styling --- */
 .alert {
     margin-bottom: 25px;
     padding: 12px 20px;
@@ -341,7 +334,6 @@ select[name="car_id"]:focus {
     user-select: none;
 }
 
-/* --- Scrollbar for #carList --- */
 #carList::-webkit-scrollbar {
     width: 8px;
 }
@@ -357,7 +349,6 @@ select[name="car_id"]:focus {
     border: 2px solid #2a2a2a;
 }
 
-/* --- Responsive tweaks --- */
 @media (max-width: 480px) {
     .container {
         padding: 25px 20px;
